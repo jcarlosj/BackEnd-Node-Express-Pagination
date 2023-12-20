@@ -4,7 +4,7 @@
   "description": "API Rest Paginacion entre articulos de un blog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon ./src/index.js"
   },
   "author": "Juan Carlos Jiménez Gutiérrez <jcjimenez29@misena.edu.co>",
   "license": "ISC",
