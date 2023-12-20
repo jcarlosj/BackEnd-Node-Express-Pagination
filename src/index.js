@@ -3,7 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
+const cors = require('cors');
 
+app.use(cors()); // Usa cors middleware
 app.use(express.json()); // Middleware para parsear el cuerpo de las solicitudes como JSON
 
 /** Configuración de Base de datos */
