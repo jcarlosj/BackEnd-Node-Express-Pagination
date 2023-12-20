@@ -27,6 +27,8 @@ const articleSchema = new mongoose.Schema({
   title: String,
   content: String,
   // Otros campos de tu modelo
+},{
+  timestamps: true
 });
 
 const Article = mongoose.model('Article', articleSchema);
@@ -54,7 +56,7 @@ app.post('/api/articles', async (req, res) => {
 app.get('/api/articles/:page', async (req, res) => {
   try {
     const page = parseInt(req.params.page) || 1;
-    const pageSize = 2; // Número de artículos por página
+    const pageSize = 3; // Número de artículos por página
 
     /** Service  */
     const articles = await Article.find()
@@ -70,14 +72,20 @@ app.get('/api/articles/:page', async (req, res) => {
 
 /** Route & Controller: Obtener Articulo por ID */
 app.get('/api/article/:id', async (req, res) => {
-  try {
-    const article = await Article.findById(req.params.id);
+  const articleId = req.params.id;
 
-    if (!article) {
+  try {
+    const currentArticle = await Article.findById( articleId );
+
+    if (!currentArticle) {
       return res.status(404).json({ error: 'Artículo no encontrado' });
     }
 
-    res.json(article);
+    /** Obtener el articulo siguiente o el anterior en funcion del orden en que fueron generados los Ids */
+    const previousArticle = await Article.findOne({ createdAt: { $lt: currentArticle.createdAt } }).sort({ createdAt: -1 });
+    const nextArticle = await Article.findOne({ createdAt: { $gt: currentArticle.createdAt } }).sort({ createdAt: 1 }); 
+
+    res.json({ article: currentArticle, previousArticle, nextArticle });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
