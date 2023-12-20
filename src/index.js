@@ -66,6 +66,21 @@ app.get('/api/articles/:page', async (req, res) => {
   }
 });
 
+/** Route & Controller: Obtener Articulo por ID */
+app.get('/api/article/:id', async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id);
+
+    if (!article) {
+      return res.status(404).json({ error: 'Artículo no encontrado' });
+    }
+
+    res.json(article);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 /** Lanza Servidor Web */
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
