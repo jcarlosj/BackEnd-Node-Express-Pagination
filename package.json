@@ -1,0 +1,11 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "API Rest Paginacion entre articulos de un blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Juan Carlos Jiménez Gutiérrez <jcjimenez29@misena.edu.co>",
+  "license": "ISC"
+}
